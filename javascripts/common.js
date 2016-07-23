@@ -9,27 +9,18 @@
     /**
      * 获取路径当中的值
      * @param 传入获取值对应的key
-     * @return 返回获取到的值或false
-     *
+     * @return 返回获取到的值
      * */
     _global.getUrlParam = function(key){
-        var val = 1;
-        try{
-            var url = location.href.split("?")[1];
-            var params = url.split("&");
-            var len = params.length;
-            for (var i=0; i< len; i++){
-                var param = params[i].split("=");;
-                var k = param[0];
-                var v = param[1];
-                if (k == key){
-                    val = v;
-                    break;
-                }
-            }
-        }catch(e){}
-        return val;
-    }
+        /**
+         * 这里的双引号和后面的表达式冲突，替换
+         * */
+        var url = decodeURIComponent(location.href).replace(/\"/g, "'");
+        /**
+         * 将url replace成json
+         * */
+        return JSON.parse("{\"" + url.split("?")[1].replace(/\&/g,",").replace(/\=/g,":").replace(/\:/g,"\":\"").replace(/\,/g, "\",\"") + "\"}")[key];
+    },
     /**
      * 阻止默认事件
      * */
@@ -101,4 +92,38 @@
     }
     win.global  = _global.lx = _global;
 })(window, document);
+void function(){
+    /**
+     *  事件绑定
+     *  @param element 需要绑定的对象 eg：dom、window
+     *  @param type 绑定的时间类型  eg：click、dbclick
+     *  @param handler 回调方法
+     * */
+    var addEvent = function(element, type, handler) {
+        if(element.addEventListener) {
+            addEvent = function(element, type, handler) {
+                element.addEventListener(type, handler, false);
+            };
+        } else if(element.attachEvent) {
+            addEvent = function(element, type, handler) {
+                element.attachEvent('on' + type, handler);
+            };
+        } else {
+            addEvent = function(element, type, handler) {
+                element['on' + type] = handler;
+            };
+        }
+        addEvent(element, type, handler);
+    };
+
+    /**
+     *  获取数组最小值
+     *  @param arr  数组
+     *  @return 数组中的最小值
+     * */
+    var getMinVal = function(arr) {
+        return Math.min.apply(Math, arr);
+    };
+}(window,document,undefined)
+
 
