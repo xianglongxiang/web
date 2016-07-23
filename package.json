@@ -1,0 +1,22 @@
+{
+  "file": "a",
+  "version": "1.0.0",
+  "author": {
+    "name": "xlx",
+    "email": "",
+    "url": ""
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": ""
+    }
+  ],
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-contrib-jshint": "^1.0.0",
+    "grunt-contrib-uglify": "^1.0.1",
+    "grunt-css": "^0.5.4",
+    "grunt-contrib-cssmin": "^1.0.1"
+  }
+}

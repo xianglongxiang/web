@@ -1,0 +1,25 @@
+@charset "UTF-8";
+.page-content{width: 1200px; padding-top: 10px ; padding-bottom: 30px ; min-height: 80%; min-height: calc(100vh - 189px); margin: 0px auto;}
+.nav-left{width: 240px; box-shadow: 0 0 1px grey; background-color: #FFFFFF; padding-top: 34px; display: inline-block; margin-left: 1px; padding-bottom: 20px;}
+.nav-left a{height: 40px;}
+.nav-left a:hover,.nav-left li.show li.doc:hover{background-color:#efefef; opacity: 0.85; filter:Alpha(opacity = 85);}
+.nav-left a:active,.nav-left li.show li.doc:active{opacity: 0.95; filter:Alpha(opacity = 95); background-color:#ececec;}
+.nav-left a.active:hover,.nav-left a.active:active,.nav-left li.show li.active:hover,.nav-left li.show li.doc.active:active{background-color:#159957;}
+.nav-left li>ul>li,.nav-left a{width: 100%; line-height: 40px; padding-left: 36px; display: block; cursor: pointer;}
+.nav-left .parent a{padding-left: 0px;}
+.nav-left li>ul>li{height: auto;}
+.nav-left .menu-2>li{padding-left: 54px;}
+.nav-left .menu-3>li{padding-left: 20px;}
+.nav-left .menu-2>li:before{content: "▪"; font-size: 14px; margin-right: 10px;}
+.nav-left .menu-2>li>a{color: #666666; font-size: 14px; display: inline-block; padding: 0px; height: 40px; width: 85%;}
+.nav-left li>ul>li.parent:before{content: ""; font-size: 0; margin-right: 0px;}
+.nav-left li>ul>li.parent li{padding-left: 36px;}
+.nav-left li>a{color: #444444; font-size: 16px;}
+.nav-left li>a{color: #444444; font-size: 16px;}
+.menu-1 li>a>span{width: 12px; height: 13px; background-image: url(../images/arrow-right.png); background-repeat: no-repeat; background-size: 10px; margin-right: 10px; display: inline-block;}
+.menu-1 .show>a>span{width: 12px; height: 10px; background-image: url(../images/arrow-down.png); background-repeat: no-repeat; background-size: 12px; margin-right: 10px; display: inline-block;}
+.nav-left li>ul>li{color: #666666; font-size: 14px;}
+.doc{height: 40px; line-height: 40px; font-size: 20px; color: #424242;}
+.active{background-color: #157a76; color: #FFFFFF !important;}
+.active.parent{background-color: #ffffff;}
+@media (max-width: 1210px){.page-content{width: 1000px;} .nav-left{width: 220px; padding-top: 25px;} }
