@@ -102,6 +102,39 @@
         }
         return randomStr;
     },
+
+    /**
+     * 将后台返回的字符编码，处理成特殊字符
+     * @return [String]
+     * */
+        _global.codeToString = function(str){
+        if(!str){
+            return "";
+        }
+        var amp = /(&amp;)/gi, lt = /(&lt;)/gi,gt = /(&gt;)/gi,nbsp = /(&nbsp;)/gi,sq = /(&#39;)/gi,quot = /(&quot;)/gi;
+        str = str.replace(amp,"&");
+        str = str.replace(lt,"<");
+        str = str.replace(gt,">");
+        str = str.replace(nbsp," ");
+        str = str.replace(sq,"\'");
+        str = str.replace(quot,"\"");
+        return str;
+    }
+
+    /**
+     * 格式化时间 yy-mm-dd
+     * @param time 时间
+     * @return 返回 yy-mm-dd 的时间格式
+     * */
+    _global.dateFormat = function(time){
+        var date = new Date(time);
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1;
+        var day = date.getDate();
+        return  year + "-" + month + "-" +day;
+    }
+
+
     win.global  = _global.lx = _global;
 })(window, document);
 
@@ -113,7 +146,7 @@ void function(win,doc){
      * @param type 文件内容
      * @param  name 文件名字
      * */
-    _global.doSave = function(value, type, name){
+    win.global.lx.doSave = function(value, type, name){
         var blob;
         if (typeof window.Blob == "function") {
             blob = new Blob([value], {
@@ -144,6 +177,72 @@ void function(win,doc){
         }
     }
     win.global  = _global.lx = _global;
-}(window,document)
+}(window,document);
+(function(win, doc){
+    /**
+     * 浏览器通知
+     * @param title 标题
+     * @param content 提示内容
+     * @param iconUrl 通知显示的图片
+     * */
+    win.global.lx.bNotify = function(content, title, iconUrl) {
+        title = title||"驾图开放平台";
+        content = content||"您看到此条信息桌面提醒设置成功";
+        iconUrl = iconUrl||"http://open.kartor.cn/images/app/basic/appIcon.png";
+        if (window.webkitNotifications) {
+            //chrome老版本
+            if (window.webkitNotifications.checkPermission() == 0) {
+                var notif = window.webkitNotifications.createNotification(iconUrl, title, content);
+                notif.display = function() {}
+                notif.onerror = function() {}
+                notif.onclose = function() {}
+                notif.onclick = function() {this.cancel();}
+                notif.replaceId = 'Meteoric';
+                notif.show();
+            } else {
+                window.webkitNotifications.requestPermission($jy.notify);
+            }
+        }
+        else if("Notification" in window){
+            // 判断是否有权限
+            if (Notification.permission === "granted") {
+                var notification = new Notification(title, {
+                    "icon": iconUrl,
+                    "body": content
+                });
+                notification.onshow = function(){
+                    console.log("You got me!");
+                };
+                notification.onclick = function() {
+                    window.focus();
+                };
+                notification.onclose = function(){
+                    console.log("notification closed!");
+                };
+                notification.onerror = function() {
+                    console.log("An error accured");
+                }
+            }
+            //如果没权限，则请求权限
+            else if (Notification.permission !== 'denied') {
+                Notification.requestPermission(function(permission) {
+                    // Whatever the user answers, we make sure we store the
+                    // information
+                    if (!('permission' in Notification)) {
+                        Notification.permission = permission;
+                    }
+                    //如果接受请求
+                    if (permission === "granted") {
+                        var notification = new Notification(title, {
+                            "icon": iconUrl,
+                            "body": content
+                        });
+                    }
+                });
+            }
+        }
+    }
+
+})(window, document);
 
 
