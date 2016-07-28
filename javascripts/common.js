@@ -134,6 +134,13 @@
         return  year + "-" + month + "-" +day;
     }
 
+    /**
+     * 判断浏览区是否支持canvas
+     * */
+    _global.isSupportCanvas = function(){
+        var elem = document.createElement('canvas');
+        return !!(elem.getContext && elem.getContext('2d'));
+    }
 
     win.global  = _global.lx = _global;
 })(window, document);
